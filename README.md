@@ -1,4 +1,7 @@
 # Duo TOTP
+
+## Warning: This script no longer works. Duo has removed the old endpoint, and I have not yet had time to decompile the latest APK to find the new endpoint.
+
 > Login through Duo with your own 2FA app
 
 # Instructions
