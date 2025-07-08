@@ -1,13 +1,11 @@
 let activate = async codeUrl => {
-  let rawCode = new URLSearchParams(new URL(codeUrl).search).get('value')
-  if (!rawCode) {
-    throw new Error('Activation code not found')
-  }
-  let [identifier, encodedHost] = rawCode.split('-')
-  let host = atob(encodedHost)
-  if (identifier.length !== 20 || !/^api.*\.duosecurity\.com$/.test(host)) {
-    throw new Error('Illegal activation code')
-  }
+  let rawValue = new URLSearchParams(new URL(codeUrl).search).get('value')
+  if (!rawValue) throw new Error('QR value not found')
+  let rawUrl = new URL(rawValue)
+
+  let host = rawUrl.host
+  let identifier = rawUrl.pathname.match(/^\/activate\/(.{20})$/)?.[1]
+  if (!identifier) throw new Error('Activation code not found')
 
   let url = `https://${host}/push/v2/activation/${identifier}`
   let body = {
